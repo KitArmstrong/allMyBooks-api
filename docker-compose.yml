@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+
+  application:
+    image: ${PROJECT}:${GIT_LOCAL_BRANCH}
+    container_name: ${PROJECT}
+    build:
+      context: ./app
+      dockerfile: Dockerfile.dev
+    ports:
+      - "4000:4000"
+    expose:
+      - "4000"
+    volumes:
+      - ./app:/usr/src/app
+    depends_on:
+      - postgres
+    networks:
+      - backend
+
+  postgres:
+    image: ${PROJECT}-postgres:${GIT_LOCAL_BRANCH}
+    container_name: ${PROJECT}-postgres
+    build:
+      context: ./.docker/postgres
+    ports:
+      - "5435:5432"
+    environment:
+      - POSTGRES_MULTIPLE_DATABASES="${DB_DATABASE}","${DB_TEST_DATABASE}"
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - ./.docker/postgres:/docker-entrypoint-initdb.d
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: "bridge"
+    
+volumes:
+  postgres:

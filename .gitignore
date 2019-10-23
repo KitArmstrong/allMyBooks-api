@@ -1,0 +1,16 @@
+# App
+app/node_modules
+app/dist
+app/test-results
+app/.env
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
+
+# Misc
+.env.local
+.vscode
+.DS_STORE
+options.config
