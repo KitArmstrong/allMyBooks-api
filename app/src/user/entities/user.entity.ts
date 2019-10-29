@@ -1,16 +1,16 @@
-import { 
-  Entity, 
-  PrimaryGeneratedColumn, 
-  Column, 
-  CreateDateColumn, 
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
   UpdateDateColumn,
-  BeforeInsert
+  BeforeInsert,
 } from 'typeorm';
 import * as bcrypt from 'bcryptjs';
 
 import { UserRO } from '../ro/user.ro';
 
-@Entity('user')
+@Entity('app_user')
 export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -27,7 +27,7 @@ export class UserEntity {
   first_name: string;
 
   @Column('varchar', {
-    length: 255
+    length: 255,
   })
   last_name: string;
 
@@ -40,7 +40,7 @@ export class UserEntity {
   @Column('text')
   password: string;
 
-  @CreateDateColumn() 
+  @CreateDateColumn()
   created_at: Date;
 
   @UpdateDateColumn()

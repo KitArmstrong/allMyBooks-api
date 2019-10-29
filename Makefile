@@ -1,7 +1,7 @@
 #!make
 
 include .env
--include app/.env
+include app/.env
 
 export $(shell sed 's/=.*//' .env)
 ifneq ("$(wildcard app/.env)","")
@@ -51,8 +51,8 @@ print-status:
 ####################
 
 setup-local-env:
-	@echo "+\n++ Make: Preparing project for test environment...\n+"
-	@cp .config/ app/.env
+	@echo "+\n++ Make: Preparing project for local environment...\n+"
+	@cp .config/.env.local app/.env
 
 setup-test-env:
 	@echo "+\n++ Make: Preparing project for test environment...\n+"
@@ -116,8 +116,8 @@ development-workspace:
 
 development-database:
 	@echo "Shelling into local database..."
-	@export PGPASSWORD=$(POSTGRES_PASSWORD)
-	@docker-compose exec postgres psql -U $(POSTGRES_USER) $(POSTGRES_DB)
+	@export PGPASSWORD=$(DB_PASSWORD)
+	@docker-compose exec $(DB_HOST) psql -U $(DB_USERNAME) $(DB_DATABASE)
 
 ##########################################
 # Pipeline build and deployment commands #

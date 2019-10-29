@@ -28,16 +28,10 @@ const seed = async () => {
 
     const userOne = await runSeed<UserEntity>(CreateUser);
     userOne.first_name = 'Admin';
-    userOne.last_name  = 'Istrator';
+    userOne.last_name  = 'User';
     userOne.email      = 'admin@example.com';
+    userOne.user_type_id = 1;
     await em.save(userOne);
-
-    const userTwo = await runSeed<UserEntity>(CreateUser);
-    userTwo.first_name  = 'General';
-    userTwo.last_name   = 'Foobar';
-    userTwo.email       = 'general-foo@example.com';
-    userTwo.user_type_id= 2;
-    await em.save(userTwo);
 
   } catch (err) {
     throw new Error(`ERROR: Seeding db: ${err}`);

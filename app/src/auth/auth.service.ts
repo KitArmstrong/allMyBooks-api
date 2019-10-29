@@ -10,9 +10,7 @@ import { UserRO } from 'src/user/ro/user.ro';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private readonly userService: UserService,
-  ) {}
+  constructor(private readonly userService: UserService) {}
 
   async login(data: AuthLoginDTO): Promise<AuthLoginRO> {
     const user = await this.validate(data);

@@ -17,7 +17,7 @@ export class AuthRegisterDTO {
   @ApiModelProperty()
   @IsNotEmpty()
   password: string;
-  
+
   @ApiModelProperty()
   @IsNotEmpty()
   first_name: string;

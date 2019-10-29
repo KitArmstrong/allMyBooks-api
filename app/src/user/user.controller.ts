@@ -1,4 +1,4 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import { Controller, UseGuards, Get } from '@nestjs/common';
 import { ApiUseTags, ApiBearerAuth } from '@nestjs/swagger';
 
 import { JWTGuard } from 'src/auth/guards/jwt.guard';
@@ -12,7 +12,7 @@ export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
-  @UseGuards(new JWTGuard())
+  @UseGuards(JWTGuard)
   findAll(): Promise<UserRO[]> {
     return this.userService.findAllUsers();
   }

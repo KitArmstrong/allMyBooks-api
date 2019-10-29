@@ -4,9 +4,8 @@ import * as Faker from 'faker';
 import { UserEntity } from 'src/user/entities/user.entity';
 
 define(UserEntity, (faker: typeof Faker, settings) => {
-  const gender = faker.random.number(1);
-  const firstName = faker.name.firstName(gender);
-  const lastName = faker.name.lastName(gender);
+  const firstName = faker.name.firstName();
+  const lastName = faker.name.lastName();
   const email = faker.internet.email(firstName, lastName);
   const password = 'password';
 
