@@ -6,4 +6,4 @@ export const setupSeeding = async (connection: Connection) => {
   await loadEntityFactories(`${dir}/database/factories`);
   await loadSeeds(`${dir}/database/factories`);
   setConnection(connection);
-}
+};

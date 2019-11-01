@@ -22,7 +22,7 @@ export class UserEntity {
   user_type_id: number;
 
   @Column('varchar', {
-    length: 255
+    length: 255,
   })
   first_name: string;
 

@@ -1,7 +1,7 @@
-import { 
-  Entity, 
-  PrimaryGeneratedColumn, 
-  Column, 
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
 } from 'typeorm';
 
 @Entity('user_type')
@@ -10,7 +10,7 @@ export class UserTypeEntity {
   id: number;
 
   @Column('varchar', {
-    length: 64
+    length: 64,
   })
   name: string;
 }

@@ -13,15 +13,16 @@ async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   app.enableCors();
 
+  // Add Validation pipe and whitelisting
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
+
   // Document application using Swagger
   documentation(app);
 
   // Listen on specified port
   await app.listen(port);
 
-  // Add Validation pipe and whitelisting
-  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
-
   Logger.log(`Server running on http://localhost:${port}`, 'Bootstrap');
 }
+
 bootstrap();

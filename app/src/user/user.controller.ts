@@ -9,7 +9,7 @@ import { UserRO } from './ro/user.ro';
 @ApiUseTags('users')
 @Controller('users')
 export class UserController {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UserService) { }
 
   @Get()
   @UseGuards(JWTGuard)

@@ -2,6 +2,8 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from 'src/app.controller';
 import { AppService } from 'src/app.service';
 
+import { SuccessRO } from 'src/common/ro/success.ro';
+
 describe('AppController', () => {
   let appController: AppController;
 
@@ -15,8 +17,8 @@ describe('AppController', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
+    it('should return {success: true}}', () => {
+      expect(appController.healthCheck()).toBe({ success: true });
     });
   });
 });

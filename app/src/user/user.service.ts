@@ -9,8 +9,8 @@ import { UserRO } from './ro/user.ro';
 export class UserService {
   constructor(
     @InjectRepository(UserEntity)
-    private userRepository: Repository<UserEntity>
-  ) {}
+    private userRepository: Repository<UserEntity>,
+  ) { }
 
   async findAllUsers(): Promise<UserRO[]> {
     const users = await this.userRepository.find();
@@ -28,7 +28,7 @@ export class UserService {
   }
 
   async create(data: Partial<UserEntity>): Promise<UserEntity> {
-    const user = await this.userRepository.create(data);
+    const user = this.userRepository.create(data);
     return await this.userRepository.save(user);
   }
 

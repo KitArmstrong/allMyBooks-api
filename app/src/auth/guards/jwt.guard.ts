@@ -3,9 +3,7 @@ import * as jwt from 'jsonwebtoken';
 
 @Injectable()
 export class JWTGuard implements CanActivate {
-  canActivate(
-    ctx: ExecutionContext,
-  ): boolean {
+  canActivate(ctx: ExecutionContext): boolean {
     const req = ctx.switchToHttp().getRequest();
     if (!req.headers.authorization) {
       return false;
@@ -22,8 +20,8 @@ export class JWTGuard implements CanActivate {
       throw new HttpException('Invalid token', HttpStatus.FORBIDDEN);
     }
 
-    const token = authSplit[1];
     try {
+      const token = authSplit[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       return decoded;
     } catch (err) {

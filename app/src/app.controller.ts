@@ -2,14 +2,15 @@ import { Controller, Get } from '@nestjs/common';
 import { ApiUseTags } from '@nestjs/swagger';
 
 import { AppService } from './app.service';
+import { SuccessRO } from './common/ro/success.ro';
 
 @ApiUseTags('base')
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly appService: AppService) { }
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Get('healthcheck')
+  healthCheck(): SuccessRO {
+    return this.appService.getHealthCheck();
   }
 }

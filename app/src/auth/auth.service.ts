@@ -5,7 +5,6 @@ import { AuthLoginDTO } from './dto/auth-login.dto';
 import { AuthLoginRO } from './ro/auth-login.ro';
 import { AuthRegisterDTO } from './dto/auth-register.dto';
 import { UserService } from 'src/user/user.service';
-import { UserEntity } from 'src/user/entities/user.entity';
 import { UserRO } from 'src/user/ro/user.ro';
 
 @Injectable()
@@ -36,7 +35,7 @@ export class AuthService {
   }
 
   private async validate(data: AuthLoginDTO): Promise<UserRO> {
-    const user: UserEntity = await this.userService.findByEmail(data.email);
+    const user = await this.userService.findByEmail(data.email);
     if (user && await user.comparePassword(data.password)) {
       return user.toResponseObject();
     }

@@ -1,9 +1,11 @@
 import 'dotenv/config';
 import { Injectable } from '@nestjs/common';
 
+import { SuccessRO } from './common/ro/success.ro';
+
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
+  getHealthCheck(): SuccessRO {
+    return { success: true };
   }
 }

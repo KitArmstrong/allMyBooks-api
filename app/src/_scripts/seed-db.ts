@@ -24,7 +24,7 @@ const seed = async () => {
   setConnection(db.connection);
 
   try {
-    console.log('Seeding a couple default users ...');
+    console.log('Seeding default users ...');
 
     const userOne = await runSeed<UserEntity>(CreateUser);
     userOne.first_name = 'Admin';

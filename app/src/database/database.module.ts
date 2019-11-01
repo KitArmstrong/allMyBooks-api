@@ -22,8 +22,8 @@ import { DatabaseService } from './database.service';
       namingStrategy: new DatabaseNamingStrategy(),
       cli: {
         migrationsDir: './migrations',
-      }
-    })
+      },
+    }),
   ],
   providers: [DatabaseService],
 })

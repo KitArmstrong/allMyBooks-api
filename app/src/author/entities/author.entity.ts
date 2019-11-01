@@ -2,25 +2,23 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
+  OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 import { AuthorRO } from '../ro/author.ro';
+import { BookEntity } from '../../book/entities/book.entity';
 
 @Entity('author')
 export class AuthorEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('varchar', {
-    length: 255,
-  })
+  @Column('varchar', { length: 255 })
   first_name: string;
 
-  @Column('varchar', {
-    length: 255,
-  })
+  @Column('varchar', { length: 255 })
   last_name: string;
 
   @Column('int')
@@ -31,6 +29,9 @@ export class AuthorEntity {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToMany(type => BookEntity, book => book.author)
+  books: BookEntity[];
 
   toResponseObject(): AuthorRO {
     return {
