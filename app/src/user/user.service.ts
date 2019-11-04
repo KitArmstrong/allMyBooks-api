@@ -12,11 +12,6 @@ export class UserService {
     private userRepository: Repository<UserEntity>,
   ) { }
 
-  async findAllUsers(): Promise<UserRO[]> {
-    const users = await this.userRepository.find();
-    return users.map((user) => user.toResponseObject());
-  }
-
   async findByEmail(email: string): Promise<UserEntity> {
     const user = await this.userRepository.findOne({ where: { email } });
     return user;

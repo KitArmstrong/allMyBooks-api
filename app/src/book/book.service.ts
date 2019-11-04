@@ -20,16 +20,37 @@ export class BookService {
     private authorRepository: Repository<AuthorEntity>,
   ) { }
 
+  /**
+   * Finds all books created by a user.
+   *
+   * @param userId User ID
+   * @returns An array of books
+   */
   async findAllBooks(userId: number): Promise<BookRO[]> {
     const books = await this.bookRepository.find({ created_by: userId });
     return books.map((book) => book.toResponseObject());
   }
 
+  /**
+   * Finds a book created by a user.
+   *
+   * @param id Book ID
+   * @param user_id User ID
+   * @returns A book object
+   */
   async findById(id: number, user_id: number): Promise<BookRO> {
     const book = await this.bookRepository.findOne({ id, created_by: user_id }, { relations: ['author', 'genre'] });
     return book.toResponseObject();
   }
 
+  /**
+   * Creates a new book object for a user. Confirms that the author
+   * and genre are valid before creation.
+   *
+   * @param data New book request
+   * @param userId User ID
+   * @returns A book object
+   */
   async create(data: BookCreateDTO, userId: number): Promise<BookEntity> {
     const { genre_id, author_id, title } = data;
 
@@ -58,6 +79,13 @@ export class BookService {
     return await this.bookRepository.save(book);
   }
 
+  /**
+   * Deletes a book.
+   *
+   * @param id Book ID
+   * @param userId User ID
+   * @returns Succes indication
+   */
   async delete(id: number, userId: number): Promise<SuccessRO> {
     this.bookRepository.delete({ id, created_by: userId });
     return { success: true };

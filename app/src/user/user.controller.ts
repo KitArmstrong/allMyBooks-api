@@ -11,9 +11,4 @@ import { UserRO } from './ro/user.ro';
 export class UserController {
   constructor(private readonly userService: UserService) { }
 
-  @Get()
-  @UseGuards(JWTGuard)
-  findAll(): Promise<UserRO[]> {
-    return this.userService.findAllUsers();
-  }
 }
