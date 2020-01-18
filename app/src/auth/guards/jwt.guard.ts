@@ -14,7 +14,7 @@ export class JWTGuard implements CanActivate {
     return true;
   }
 
-  validateToken(auth: string) {
+  private validateToken(auth: string) {
     const authSplit = auth.split(' ');
     if (authSplit[0] !== 'Bearer') {
       throw new HttpException('Invalid token', HttpStatus.FORBIDDEN);

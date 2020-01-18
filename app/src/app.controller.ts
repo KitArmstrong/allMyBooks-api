@@ -4,7 +4,7 @@ import { ApiUseTags } from '@nestjs/swagger';
 import { AppService } from './app.service';
 import { SuccessRO } from './common/ro/success.ro';
 
-@ApiUseTags('base')
+@ApiUseTags('app')
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) { }

@@ -1,13 +1,14 @@
-import { Injectable, HttpException, HttpStatus, Inject } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { BookEntity } from 'src/book/entities/book.entity';
 import { BookGenreEntity } from 'src/book/entities/book-genre.entity';
 import { BookRO } from 'src/book/ro/book.ro';
+import { SuccessRO } from 'src/common/ro/success.ro';
 import { BookCreateDTO } from 'src/book/dto/book.create.dto';
 import { AuthorEntity } from 'src/author/entities/author.entity';
-import { SuccessRO } from 'src/common/ro/success.ro';
+import { handleError } from 'src/utils/error';
 
 @Injectable()
 export class BookService {
@@ -27,8 +28,12 @@ export class BookService {
    * @returns An array of books
    */
   async findAllBooks(userId: number): Promise<BookRO[]> {
-    const books = await this.bookRepository.find({ created_by: userId });
-    return books.map((book) => book.toResponseObject());
+    try {
+      const books = await this.bookRepository.find({ created_by: userId });
+      return books.map((book) => book.toResponseObject());
+    } catch (error) {
+      handleError('Error finding books', HttpStatus.BAD_REQUEST);
+    }
   }
 
   /**
@@ -39,8 +44,12 @@ export class BookService {
    * @returns A book object
    */
   async findById(id: number, user_id: number): Promise<BookRO> {
-    const book = await this.bookRepository.findOne({ id, created_by: user_id }, { relations: ['author', 'genre'] });
-    return book.toResponseObject();
+    try {
+      const book = await this.bookRepository.findOne({ id, created_by: user_id }, { relations: ['author', 'genre'] });
+      return book.toResponseObject();
+    } catch (error) {
+      handleError('Error finding book', HttpStatus.BAD_REQUEST);
+    }
   }
 
   /**
@@ -54,29 +63,33 @@ export class BookService {
   async create(data: BookCreateDTO, userId: number): Promise<BookEntity> {
     const { genre_id, author_id, title } = data;
 
-    // Confirm the genre exists.
-    const genre = await this.bookGenreRepository.findOne({ id: genre_id });
+    try {
+      // Confirm the genre exists.
+      const genre = await this.bookGenreRepository.findOne({ id: genre_id });
 
-    if (!genre) {
-      throw new HttpException(`Genre not found.`, HttpStatus.BAD_REQUEST);
+      if (!genre) {
+        handleError('Error creating book - invalid genre', HttpStatus.BAD_REQUEST);
+      }
+
+      // Confirm the author exists.
+      const author = await this.authorRepository.findOne({ id: author_id });
+
+      if (!author) {
+        handleError('Error creating book - invalid author', HttpStatus.BAD_REQUEST);
+      }
+
+      const newBook = {
+        title,
+        created_by: userId,
+        author,
+        genre,
+      };
+
+      const book = this.bookRepository.create(newBook);
+      return await this.bookRepository.save(book);
+    } catch (error) {
+      handleError('Error creating book', HttpStatus.BAD_REQUEST);
     }
-
-    // Confirm the author exists.
-    const author = await this.authorRepository.findOne({ id: author_id });
-
-    if (!author) {
-      throw new HttpException('Author not found', HttpStatus.BAD_REQUEST);
-    }
-
-    const newBook = {
-      title,
-      created_by: userId,
-      author,
-      genre,
-    };
-
-    const book = this.bookRepository.create(newBook);
-    return await this.bookRepository.save(book);
   }
 
   /**
@@ -87,7 +100,11 @@ export class BookService {
    * @returns Succes indication
    */
   async delete(id: number, userId: number): Promise<SuccessRO> {
-    this.bookRepository.delete({ id, created_by: userId });
-    return { success: true };
+    try {
+      this.bookRepository.delete({ id, created_by: userId });
+      return { success: true };
+    } catch (error) {
+      handleError('Error deleting book', HttpStatus.BAD_REQUEST);
+    }
   }
 }

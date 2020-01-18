@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -6,6 +6,7 @@ import { AuthorEntity } from 'src/author/entities/author.entity';
 import { AuthorRO } from 'src/author/ro/author.ro';
 import { SuccessRO } from 'src/common/ro/success.ro';
 import { AuthorCreateDTO } from 'src/author/dto/author.create.dto';
+import { handleError } from 'src/utils/error';
 
 @Injectable()
 export class AuthorService {
@@ -21,8 +22,12 @@ export class AuthorService {
    * @returns An array of authors
    */
   async findAllAuthors(userId: number): Promise<AuthorRO[]> {
-    const authors = await this.authorRepository.find({ created_by: userId });
-    return authors.map(author => author.toResponseObject());
+    try {
+      const authors = await this.authorRepository.find({ created_by: userId });
+      return authors.map(author => author.toResponseObject());
+    } catch (error) {
+      handleError('Error finding authors', HttpStatus.BAD_REQUEST);
+    }
   }
 
   /**
@@ -33,8 +38,12 @@ export class AuthorService {
    * @returns An author
    */
   async findById(id: number, userId: number): Promise<AuthorRO> {
-    const author = await this.authorRepository.findOne({ id, created_by: userId });
-    return author.toResponseObject();
+    try {
+      const author = await this.authorRepository.findOne({ id, created_by: userId });
+      return author.toResponseObject();
+    } catch (error) {
+      handleError('Error finding author', HttpStatus.BAD_REQUEST);
+    }
   }
 
   /**
@@ -45,8 +54,12 @@ export class AuthorService {
    * @returns New author object
    */
   async create(data: AuthorCreateDTO, userId: number): Promise<AuthorEntity> {
-    const author = this.authorRepository.create({ ...data, created_by: userId });
-    return await this.authorRepository.save(author);
+    try {
+      const author = this.authorRepository.create({ ...data, created_by: userId });
+      return await this.authorRepository.save(author);
+    } catch (error) {
+      handleError('Error creating author', HttpStatus.BAD_REQUEST);
+    }
   }
 
   /**
@@ -57,7 +70,11 @@ export class AuthorService {
    * @returns Success indication
    */
   async delete(id: number, userId: number): Promise<SuccessRO> {
-    this.authorRepository.delete({ id, created_by: userId });
-    return { success: true };
+    try {
+      this.authorRepository.delete({ id, created_by: userId });
+      return { success: true };
+    } catch (error) {
+      handleError('Error deleting author', HttpStatus.BAD_REQUEST);
+    }
   }
 }

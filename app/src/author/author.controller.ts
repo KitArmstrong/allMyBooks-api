@@ -13,7 +13,7 @@ import { AuthorCreateDTO } from 'src/author/dto/author.create.dto';
 @ApiUseTags('authors')
 @Controller('authors')
 export class AuthorController {
-  constructor(private readonly authorService: AuthorService) {}
+  constructor(private readonly authorService: AuthorService) { }
 
   @Get()
   @UseGuards(JWTGuard)
