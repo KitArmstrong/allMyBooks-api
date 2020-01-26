@@ -24,14 +24,14 @@ const seed = async () => {
   setConnection(db.connection);
 
   try {
-    console.log('Seeding default users ...');
+    // console.log('Seeding default users ...');
 
-    const userOne = await runSeed<UserEntity>(CreateUser);
-    userOne.first_name = 'Admin';
-    userOne.last_name  = 'User';
-    userOne.email      = 'admin@example.com';
-    userOne.user_type_id = 1;
-    await em.save(userOne);
+    // const userOne = await runSeed<UserEntity>(CreateUser);
+    // userOne.first_name = 'Admin';
+    // userOne.last_name  = 'User';
+    // userOne.email      = 'admin@example.com';
+    // userOne.user_type_id = 1;
+    // await em.save(userOne);
 
   } catch (err) {
     throw new Error(`ERROR: Seeding db: ${err}`);
