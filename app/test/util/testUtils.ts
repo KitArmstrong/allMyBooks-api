@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { Connection } from 'typeorm';
 import { loadEntityFactories, loadSeeds, setConnection, runSeed } from 'typeorm-seeding';
 import * as jwt from 'jsonwebtoken';
 
 import { AppModule } from 'src/app.module';
 import { DatabaseService } from 'src/database/database.service';
-import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { UserEntity } from 'src/user/entities/user.entity';
 import { AuthLoginRO } from 'src/auth/ro/auth-login.ro';
 import { CreateUser } from 'src/database/seeds/CreateUser';
@@ -54,8 +54,8 @@ export const createTestToken = (user: UserEntity): AuthLoginRO => {
   const accessToken = jwt.sign(
     {
       id: user.id,
-      user_status_id: user.user_status_id,
-      user_type_id: user.user_type_id,
+      user_status_id: user.user_status.id,
+      user_type_id: user.user_type.id,
     },
     process.env.JWT_SECRET,
     { expiresIn: '1d' },
@@ -66,7 +66,7 @@ export const createTestToken = (user: UserEntity): AuthLoginRO => {
 
 export const createTestUser = async (connection: Connection, type: UserTypeEnum, status: UserStatusEnum) => {
   const user = await runSeed<UserEntity>(CreateUser);
-  user.user_type_id = type;
-  user.user_status_id = status;
+  user.user_type.id = type;
+  user.user_status.id = status;
   return await connection.manager.save(user);
 };

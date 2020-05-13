@@ -21,7 +21,7 @@ export class UserEntity {
   @ManyToOne(type => UserStatusEntity, userStatus => userStatus.users)
   user_status: UserStatusEntity;
 
-  @ManyToOne(type => UserTypeEntity, (userType) => userType.users)
+  @ManyToOne(type => UserTypeEntity, userType => userType.users)
   user_type: UserTypeEntity;
 
   @Column('varchar', { length: 255 })

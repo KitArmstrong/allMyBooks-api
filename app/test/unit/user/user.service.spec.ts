@@ -1,12 +1,13 @@
 import { Test, TestingModule } from '@nestjs/testing';
+
 import { UserService } from 'src/user/user.service';
 
 describe('UserService', () => {
   let service: UserService;
-  let mockService = { 
-    findAllUsers: () => [{}], 
-    findByEmail: () => {}, 
-    findById: () => {}, 
+  const mockService = {
+    findAllUsers: () => [{}],
+    findByEmail: () => {},
+    findById: () => {},
     create: () => {},
   };
 
