@@ -1,4 +1,4 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as jwt from 'jsonwebtoken';
@@ -54,7 +54,7 @@ export class AuthService {
   }
 
   /**
-   * Registers a new users.
+   * Registers a new user.
    *
    * @param data User registration request
    * @returns New user object

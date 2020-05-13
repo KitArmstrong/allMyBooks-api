@@ -1,4 +1,4 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -97,7 +97,7 @@ export class BookService {
    *
    * @param id Book ID
    * @param userId User ID
-   * @returns Succes indication
+   * @returns Success indication
    */
   async delete(id: number, userId: number): Promise<SuccessRO> {
     try {

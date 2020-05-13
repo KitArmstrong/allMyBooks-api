@@ -1,4 +1,3 @@
-import 'dotenv/config';
 import { Injectable } from '@nestjs/common';
 
 import { SuccessRO } from './common/ro/success.ro';

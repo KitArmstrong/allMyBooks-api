@@ -15,6 +15,7 @@ export const documentation = (app: INestApplication) => {
     .setVersion(CONFIG.version.major + '.' + CONFIG.version.minor)
     .addBearerAuth()
     .build();
+
   const baseDocument = SwaggerModule.createDocument(app, options, {
     include: [
       AppModule,
@@ -24,5 +25,6 @@ export const documentation = (app: INestApplication) => {
       AuthorModule,
     ],
   });
+
   SwaggerModule.setup('api', app, baseDocument);
 };

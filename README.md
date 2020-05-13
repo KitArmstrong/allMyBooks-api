@@ -32,7 +32,6 @@ $ make development-database
 $ make close-local-development
 ```
 
-
 ## Running with local machine
 
 ```bash

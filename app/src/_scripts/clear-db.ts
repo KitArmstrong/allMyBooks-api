@@ -22,7 +22,7 @@ const clear = async () => {
     const entities = db.connection.entityMetadatas;
     const blacklist = [
       'user_status',
-      'user_type'
+      'user_type',
     ];
     for (const entity of entities) {
       if (!blacklist.includes(entity.tableName)) {
@@ -34,6 +34,6 @@ const clear = async () => {
   } catch (err) {
     throw new Error(`ERROR: Cleaning db: ${err}`);
   }
-}
+};
 
 clear();

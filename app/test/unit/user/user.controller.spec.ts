@@ -3,10 +3,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { UserController } from 'src/user/user.controller';
 import { UserService } from 'src/user/user.service';
 
-const userServiceMock = { 
-  showAll: () => [{}], 
-  findByEmail: () => {}, 
-  findById: () => {}, 
+const userServiceMock = {
+  showAll: () => [{}],
+  findByEmail: () => {},
+  findById: () => {},
   create: () => {},
 };
 
@@ -21,10 +21,10 @@ describe('User Controller', () => {
       .overrideProvider(UserService)
       .useValue(userServiceMock)
       .compile();
-    
+
     controller = module.get<UserController>(UserController);
   });
-  
+
   it('should be defined', () => {
     expect(controller).toBeDefined();
   });

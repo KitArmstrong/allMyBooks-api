@@ -14,8 +14,8 @@ define(UserEntity, (faker: typeof Faker, settings) => {
   user.last_name = lastName;
   user.email = email;
   user.password = password;
-  // user.user_status_id = 1;
-  // user.user_type_id = 1;
+  user.user_status.id = 1;
+  user.user_type.id = 1;
 
   return user;
 });
