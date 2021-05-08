@@ -39,7 +39,7 @@
     "reflect-metadata": "0.1.12",
     "rxjs": "6.3.3",
     "swagger-ui-express": "4.0.5",
-    "typeorm": "0.2.17",
+    "typeorm": "0.2.25",
     "typeorm-seeding": "1.0.0-beta.6"
   },
   "devDependencies": {
